@@ -16,5 +16,10 @@ spring:
     url: jdbc:postgresql://localhost:5435/t1study
     driver-class-name: org.postgresql.Driver
 
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    locations: classpath:db.migration
+
 server:
   port: 8081

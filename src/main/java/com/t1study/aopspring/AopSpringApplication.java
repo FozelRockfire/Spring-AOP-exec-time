@@ -17,8 +17,8 @@ public class AopSpringApplication {
 		SpringApplication.run(AopSpringApplication.class, args);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void onReady() {
-		annotationTestService.threeSecSleep();
-	}
+//	@EventListener(ApplicationReadyEvent.class)
+//	public void onReady() {
+//		annotationTestService.sleepRandomTimeUpTo3Seconds();
+//	}
 }
