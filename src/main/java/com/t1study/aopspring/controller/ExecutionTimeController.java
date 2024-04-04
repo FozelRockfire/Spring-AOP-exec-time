@@ -1,6 +1,7 @@
 package com.t1study.aopspring.controller;
 
 
+import com.t1study.aopspring.dto.AverageTimeResponse;
 import com.t1study.aopspring.dto.ExecutionTimeResponse;
 import com.t1study.aopspring.service.ExecutionTimeService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,20 @@ public class ExecutionTimeController {
     @GetMapping("/method-name")
     public ResponseEntity<List<ExecutionTimeResponse>> getTimesByMethodName(@RequestParam(name = "methodName") String methodName) {
         return ResponseEntity.ok(executionTimeService.getTimesByMethodName(methodName));
+    }
+
+    @GetMapping("/average/method-name")
+    public ResponseEntity<AverageTimeResponse> getAverageTimeByMethodName(@RequestParam(name = "methodName") String methodName){
+        return ResponseEntity.ok(executionTimeService.getAvgTimeByMethodName(methodName));
+    }
+
+    @GetMapping("/max/method-name")
+    public ResponseEntity<ExecutionTimeResponse> getMaxTimeByMethodName(@RequestParam(name = "methodName") String methodName){
+        return ResponseEntity.ok(executionTimeService.getMaxTimeByMethodName(methodName));
+    }
+
+    @GetMapping("/min/method-name")
+    public ResponseEntity<ExecutionTimeResponse> getMinTimeByMethodName(@RequestParam(name = "methodName") String methodName){
+        return ResponseEntity.ok(executionTimeService.getMinTimeByMethodName(methodName));
     }
 }

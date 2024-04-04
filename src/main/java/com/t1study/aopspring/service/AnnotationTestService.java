@@ -1,21 +1,8 @@
 package com.t1study.aopspring.service;
 
+public interface AnnotationTestService {
 
-import com.t1study.aopspring.annotation.TrackTime;
-import lombok.SneakyThrows;
-import org.springframework.stereotype.Service;
+    void sleepRandomTimeUpTo3Seconds();
 
-import java.util.Random;
-
-@Service
-public class AnnotationTestService {
-
-    @SneakyThrows
-    @TrackTime
-    public void sleepRandomTimeUpTo3Seconds(){
-        var random = new Random();
-        System.out.println("буду ждать");
-        Thread.sleep(random.nextInt(3000));
-        System.out.println("подождал");
-    }
+    void asyncSleepRandomTimeUpTo3Seconds();
 }

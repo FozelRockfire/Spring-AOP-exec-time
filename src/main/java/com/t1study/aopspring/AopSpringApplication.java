@@ -1,24 +1,29 @@
 package com.t1study.aopspring;
 
 import com.t1study.aopspring.service.AnnotationTestService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
+@EnableAsync
+@RequiredArgsConstructor
 public class AopSpringApplication {
 
-	@Autowired
-	AnnotationTestService annotationTestService;
+    private final AnnotationTestService annotationTestService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(AopSpringApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AopSpringApplication.class, args);
+    }
 
-//	@EventListener(ApplicationReadyEvent.class)
-//	public void onReady() {
-//		annotationTestService.sleepRandomTimeUpTo3Seconds();
-//	}
+    @EventListener(ApplicationReadyEvent.class)
+    public void onReady() {
+        for (int i = 0; i < 5; i++) {
+            annotationTestService.sleepRandomTimeUpTo3Seconds();
+            annotationTestService.asyncSleepRandomTimeUpTo3Seconds();
+        }
+    }
 }

@@ -11,7 +11,11 @@ import java.util.Optional;
 @Repository
 public interface ExecutionTimeRepository extends JpaRepository<ExecutionTime, Long>{
 
-    Optional<List<ExecutionTime>> findAllByClassName(String classname);
+    Optional<List<ExecutionTime>> findAllByClassName(String className);
 
-    Optional<List<ExecutionTime>> findAllByMethodName(String classname);
+    Optional<List<ExecutionTime>> findAllByMethodName(String methodName);
+
+    Optional<ExecutionTime> findFirstByMethodNameOrderByExecutionTimeDesc(String methodName);
+
+    Optional<ExecutionTime> findFirstByMethodNameOrderByExecutionTimeAsc(String methodName);
 }
