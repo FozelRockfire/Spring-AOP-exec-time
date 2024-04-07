@@ -22,20 +22,20 @@ public abstract class AbstractTrackTimeAspect {
 
     public abstract Object around(ProceedingJoinPoint proceedingJoinPoint);
 
-    protected Object trackTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    protected Object trackTime(ProceedingJoinPoint proceedingJoinPoint, String annotationName) throws Throwable {
 
         long startTime = System.currentTimeMillis();
 
         String methodName = proceedingJoinPoint.getSignature().getName();
         Object[] methodArgs = proceedingJoinPoint.getArgs();
 
-        log.info("Выполнение метода {} с аргументами {}", methodName, methodArgs);
+        log.info("{}: Выполнение метода {} с аргументами {}", annotationName, methodName, methodArgs);
 
         Object result = proceedingJoinPoint.proceed();
 
         long executionTimeValue = System.currentTimeMillis() - startTime;
 
-        log.info("Метод {} выполнился за {} мс с результатом {}", methodName, executionTimeValue, methodArgs);
+        log.info("{}: Метод {} выполнился за {} мс с результатом {}", annotationName, methodName, executionTimeValue, methodArgs);
 
         ExecutionTime executionTime = ExecutionTime.builder()
                 .className(proceedingJoinPoint.getSignature().getDeclaringType().getSimpleName())

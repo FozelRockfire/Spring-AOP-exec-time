@@ -22,32 +22,20 @@ public class ExecutionTimeController {
     private final ExecutionTimeService executionTimeService;
 
     @GetMapping()
-    public ResponseEntity<List<ExecutionTimeResponse>> getTimes() {
-        return ResponseEntity.status(HttpStatus.OK).body(executionTimeService.getTimes());
+    public ResponseEntity<List<ExecutionTimeResponse>> getTimes(@RequestParam(name = "className", required = false) String className,
+                                                                @RequestParam(name = "methodName", required = false) String methodName) {
+        return ResponseEntity.status(HttpStatus.OK).body(executionTimeService.getTimes(className, methodName));
     }
 
-    @GetMapping("/class-name")
-    public ResponseEntity<List<ExecutionTimeResponse>> getTimesByClassName(@RequestParam(name = "className") String className) {
-        return ResponseEntity.ok(executionTimeService.getTimesByClassName(className));
-    }
-
-    @GetMapping("/method-name")
-    public ResponseEntity<List<ExecutionTimeResponse>> getTimesByMethodName(@RequestParam(name = "methodName") String methodName) {
-        return ResponseEntity.ok(executionTimeService.getTimesByMethodName(methodName));
-    }
-
-    @GetMapping("/average/method-name")
-    public ResponseEntity<AverageTimeResponse> getAverageTimeByMethodName(@RequestParam(name = "methodName") String methodName){
+    @GetMapping("/average")
+    public ResponseEntity<AverageTimeResponse> getAverageTimeByMethodName(@RequestParam(name = "methodName") String methodName) {
         return ResponseEntity.ok(executionTimeService.getAvgTimeByMethodName(methodName));
     }
 
-    @GetMapping("/max/method-name")
-    public ResponseEntity<ExecutionTimeResponse> getMaxTimeByMethodName(@RequestParam(name = "methodName") String methodName){
-        return ResponseEntity.ok(executionTimeService.getMaxTimeByMethodName(methodName));
+    @GetMapping("/extremum")
+    public ResponseEntity<ExecutionTimeResponse> getExtremumTimeByMethodName(@RequestParam(name = "methodName") String methodName,
+                                                                             @RequestParam(name = "extremum") String extremum) {
+        return ResponseEntity.ok(executionTimeService.getExtremumTimeByMethodName(methodName, extremum));
     }
 
-    @GetMapping("/min/method-name")
-    public ResponseEntity<ExecutionTimeResponse> getMinTimeByMethodName(@RequestParam(name = "methodName") String methodName){
-        return ResponseEntity.ok(executionTimeService.getMinTimeByMethodName(methodName));
-    }
 }

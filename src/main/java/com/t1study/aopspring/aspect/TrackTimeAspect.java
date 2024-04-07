@@ -1,6 +1,6 @@
 package com.t1study.aopspring.aspect;
 
-import com.t1study.aopspring.service.ipml.ExecutionTimeServiceImpl;
+import com.t1study.aopspring.service.ExecutionTimeService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TrackTimeAspect extends AbstractTrackTimeAspect {
 
-    public TrackTimeAspect(ExecutionTimeServiceImpl executionTimeServiceImpl) {
-        super(executionTimeServiceImpl);
+    public TrackTimeAspect(ExecutionTimeService executionTimeService) {
+        super(executionTimeService);
     }
 
     @Override
@@ -25,8 +25,7 @@ public class TrackTimeAspect extends AbstractTrackTimeAspect {
     @Around("trackPointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
         try {
-            log.info("Метод с @TrackTime");
-            return trackTime(proceedingJoinPoint);
+            return trackTime(proceedingJoinPoint, "TrackTime");
         } catch (Throwable e) {
             log.error("TrackTime error:", e);
             return null;

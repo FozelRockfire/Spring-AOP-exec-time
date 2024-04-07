@@ -1,7 +1,7 @@
 package com.t1study.aopspring.aspect;
 
 
-import com.t1study.aopspring.service.ipml.ExecutionTimeServiceImpl;
+import com.t1study.aopspring.service.ExecutionTimeService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -17,8 +17,8 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class TrackAsyncTimeAspect extends AbstractTrackTimeAspect {
 
-    public TrackAsyncTimeAspect(ExecutionTimeServiceImpl executionTimeServiceImpl) {
-        super(executionTimeServiceImpl);
+    public TrackAsyncTimeAspect(ExecutionTimeService executionTimeService) {
+        super(executionTimeService);
     }
 
     @Override
@@ -32,8 +32,7 @@ public class TrackAsyncTimeAspect extends AbstractTrackTimeAspect {
         try {
             return CompletableFuture.supplyAsync(() -> {
                 try {
-                    log.info("Метод с @TrackAsyncTime");
-                    return trackTime(proceedingJoinPoint);
+                    return trackTime(proceedingJoinPoint, "TrackAsyncTime");
                 } catch (Throwable e) {
                     log.error("AsyncTrackTime error:", e);
                     return null;
@@ -45,8 +44,7 @@ public class TrackAsyncTimeAspect extends AbstractTrackTimeAspect {
 
 //        return CompletableFuture.runAsync(() -> {
 //            try {
-//                log.info("Метод с @TrackAsyncTime");
-//                trackTime(proceedingJoinPoint);
+//                trackTime(proceedingJoinPoint, "TrackAsyncTime");
 //            } catch (Throwable e) {
 //                log.error("AsyncTrackTime error:", e);
 //            }

@@ -10,16 +10,10 @@ public interface ExecutionTimeService {
 
     void saveExecutionTime(ExecutionTime executionTime);
 
-    List<ExecutionTimeResponse> getTimes();
-
-    List<ExecutionTimeResponse> getTimesByClassName(String className);
-
-    List<ExecutionTimeResponse> getTimesByMethodName(String methodName);
+    List<ExecutionTimeResponse> getTimes(String classname, String methodName);
 
     AverageTimeResponse getAvgTimeByMethodName(String methodName);
 
-    ExecutionTimeResponse getMaxTimeByMethodName(String methodName);
-
-    ExecutionTimeResponse getMinTimeByMethodName(String methodName);
+    ExecutionTimeResponse getExtremumTimeByMethodName(String methodName, String extremum);
 }
 
