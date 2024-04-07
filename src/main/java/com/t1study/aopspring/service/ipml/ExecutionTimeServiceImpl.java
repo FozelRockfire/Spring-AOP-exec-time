@@ -2,9 +2,11 @@ package com.t1study.aopspring.service.ipml;
 
 import com.t1study.aopspring.dto.AverageTimeResponse;
 import com.t1study.aopspring.dto.ExecutionTimeResponse;
+import com.t1study.aopspring.dto.RMSETimeResponse;
 import com.t1study.aopspring.exception.NotFoundException;
 import com.t1study.aopspring.mapper.AverageTimeMapper;
 import com.t1study.aopspring.mapper.ExecutionTimeMapper;
+import com.t1study.aopspring.mapper.RMSEMapper;
 import com.t1study.aopspring.model.ExecutionTime;
 import com.t1study.aopspring.repository.ExecutionTimeRepository;
 import com.t1study.aopspring.service.ExecutionTimeService;
@@ -58,11 +60,9 @@ public class ExecutionTimeServiceImpl implements ExecutionTimeService {
             throw new NotFoundException("Замеры времени выполнения искомого метода не найдены");
         }
 
-        long totalTime = executionTimes.stream()
-                .mapToLong(ExecutionTime::getExecutionTime)
-                .sum();
+        double avgTime = getAVGTime(executionTimes);
 
-        return AverageTimeMapper.INSTANCE.toDTO(executionTimes.get(0), totalTime / executionTimes.size());
+        return AverageTimeMapper.INSTANCE.toDTO(executionTimes.get(0), avgTime);
     }
 
     public ExecutionTimeResponse getExtremumTimeByMethodName(String methodName, String extremum) {
@@ -78,4 +78,32 @@ public class ExecutionTimeServiceImpl implements ExecutionTimeService {
             default -> throw new IllegalArgumentException("Неверный тип экстремума");
         };
     }
+
+    public RMSETimeResponse getRMSEByMethodName(String methodName) {
+
+        List<ExecutionTime> executionTimes = executionTimeRepository.findAllByMethodName(methodName);
+
+        if (executionTimes.isEmpty()) {
+            throw new NotFoundException("Замеры времени выполнения искомого метода не найдены");
+        }
+
+        double avgTime = getAVGTime(executionTimes);
+
+        double sumOfSquaredDifferences = executionTimes.stream()
+                .mapToDouble(executionTime -> Math.pow(executionTime.getExecutionTime() - avgTime, 2))
+                .sum();
+
+        double rmse = Math.sqrt(sumOfSquaredDifferences / executionTimes.size());
+
+        return RMSEMapper.INSTANCE.toDTO(executionTimes.get(0), rmse);
+    }
+
+    public double getAVGTime(List<ExecutionTime> executionTimes) {
+
+        return executionTimes.stream()
+                .mapToLong(ExecutionTime::getExecutionTime)
+                .average()
+                .orElse(0);
+    }
+
 }

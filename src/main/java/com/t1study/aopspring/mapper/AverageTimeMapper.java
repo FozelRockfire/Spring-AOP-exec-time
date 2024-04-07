@@ -10,7 +10,7 @@ public interface AverageTimeMapper extends Mappable<ExecutionTime, AverageTimeRe
 
     AverageTimeMapper INSTANCE = Mappers.getMapper(AverageTimeMapper.class);
 
-    default AverageTimeResponse toDTO(ExecutionTime executionTime, long avgTime) {
+    default AverageTimeResponse toDTO(ExecutionTime executionTime, double avgTime) {
 
         return AverageTimeResponse.builder()
                 .avgTime(avgTime)

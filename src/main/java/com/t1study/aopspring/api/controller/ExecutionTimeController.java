@@ -1,8 +1,10 @@
-package com.t1study.aopspring.controller;
+package com.t1study.aopspring.api.controller;
 
 
+import com.t1study.aopspring.api.ExecutionTimeApi;
 import com.t1study.aopspring.dto.AverageTimeResponse;
 import com.t1study.aopspring.dto.ExecutionTimeResponse;
+import com.t1study.aopspring.dto.RMSETimeResponse;
 import com.t1study.aopspring.service.ExecutionTimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/exec-times")
-public class ExecutionTimeController {
+public class ExecutionTimeController implements ExecutionTimeApi {
 
     private final ExecutionTimeService executionTimeService;
 
@@ -36,6 +38,11 @@ public class ExecutionTimeController {
     public ResponseEntity<ExecutionTimeResponse> getExtremumTimeByMethodName(@RequestParam(name = "methodName") String methodName,
                                                                              @RequestParam(name = "extremum") String extremum) {
         return ResponseEntity.ok(executionTimeService.getExtremumTimeByMethodName(methodName, extremum));
+    }
+
+    @GetMapping("/rmse")
+    public ResponseEntity<RMSETimeResponse> getRMSEByMethodName(@RequestParam(name = "methodName") String methodName) {
+        return ResponseEntity.ok(executionTimeService.getRMSEByMethodName(methodName));
     }
 
 }

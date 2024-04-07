@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 @Builder
-public record AverageTimeResponse (
+public record RMSETimeResponse (
 
         @Schema(description = "Имя класса",
                 example = "AnnotationTestServiceImpl")
@@ -14,8 +14,8 @@ public record AverageTimeResponse (
                 example = "sleepRandomTimeUpTo3Seconds")
         String methodName,
 
-        @Schema(description = "Среднее время выполнения",
+        @Schema(description = "Среднеквадратичная ошибка",
                 example = "100")
-        double avgTime
+        double RMSE
 ) {
 }
