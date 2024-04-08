@@ -1,14 +1,11 @@
 package com.t1study.aopspring.aspect;
 
-import com.t1study.aopspring.model.ExecutionTime;
 import com.t1study.aopspring.service.ExecutionTimeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 @Aspect
@@ -28,6 +25,8 @@ public abstract class AbstractTrackTimeAspect {
 
         String methodName = proceedingJoinPoint.getSignature().getName();
         Object[] methodArgs = proceedingJoinPoint.getArgs();
+        String className = proceedingJoinPoint
+                .getSignature().getDeclaringType().getSimpleName();
 
         log.info("{}: Выполнение метода {} с аргументами {}", annotationName, methodName, methodArgs);
 
@@ -37,13 +36,7 @@ public abstract class AbstractTrackTimeAspect {
 
         log.info("{}: Метод {} выполнился за {} мс с результатом {}", annotationName, methodName, executionTimeValue, methodArgs);
 
-        ExecutionTime executionTime = ExecutionTime.builder()
-                .className(proceedingJoinPoint.getSignature().getDeclaringType().getSimpleName())
-                .methodName(methodName)
-                .executionTime(executionTimeValue)
-                .executionDate(LocalDateTime.now())
-                .build();
-        executionTimeService.saveExecutionTime(executionTime);
+        executionTimeService.saveExecutionTime(executionTimeValue, methodName, className);
 
         return result;
     }

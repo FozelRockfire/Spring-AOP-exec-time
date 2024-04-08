@@ -12,17 +12,25 @@ import java.util.Random;
 @Service
 public class AnnotationTestServiceImpl implements AnnotationTestService {
 
-    @SneakyThrows
+
     @TrackTime
     public void sleepRandomTimeUpTo3Seconds(){
-        var random = new Random();
-        Thread.sleep(random.nextInt(3000));
+        sleepRandom(3000);
+    }
+
+    @TrackAsyncTime
+    public void asyncSleepRandomTimeUpTo3Seconds(){
+        sleepRandom(3000);
+    }
+
+    @TrackTime
+    public void sleepRandomTimeUpToVarSeconds(Integer bound) {
+        sleepRandom(bound);
     }
 
     @SneakyThrows
-    @TrackAsyncTime
-    public void asyncSleepRandomTimeUpTo3Seconds(){
+    private void sleepRandom(Integer bound){
         var random = new Random();
-        Thread.sleep(random.nextInt(3000));
+        Thread.sleep(random.nextInt(bound));
     }
 }

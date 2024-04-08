@@ -14,8 +14,8 @@ public interface RMSEMapper extends Mappable<ExecutionTime, RMSETimeResponse> {
 
         return RMSETimeResponse.builder()
                 .RMSE(rmse)
-                .methodName(executionTime.getMethodName())
-                .className(executionTime.getClassName())
+                .methodName(executionTime.getMeasuredMethod().getMethodName())
+                .className(executionTime.getMeasuredMethod().getMeasuredClass().getClassName())
                 .build();
     }
 }

@@ -14,8 +14,8 @@ public interface AverageTimeMapper extends Mappable<ExecutionTime, AverageTimeRe
 
         return AverageTimeResponse.builder()
                 .avgTime(avgTime)
-                .methodName(executionTime.getMethodName())
-                .className(executionTime.getClassName())
+                .methodName(executionTime.getMeasuredMethod().getMethodName())
+                .className(executionTime.getMeasuredMethod().getMeasuredClass().getClassName())
                 .build();
     }
 }

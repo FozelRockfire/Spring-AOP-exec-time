@@ -21,9 +21,10 @@ public class AopSpringApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void onReady() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             annotationTestService.sleepRandomTimeUpTo3Seconds();
             annotationTestService.asyncSleepRandomTimeUpTo3Seconds();
+            annotationTestService.sleepRandomTimeUpToVarSeconds(2000);
         }
     }
 }

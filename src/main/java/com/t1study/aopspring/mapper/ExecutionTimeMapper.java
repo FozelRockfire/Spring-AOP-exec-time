@@ -9,4 +9,13 @@ import org.mapstruct.factory.Mappers;
 public interface ExecutionTimeMapper extends Mappable<ExecutionTime, ExecutionTimeResponse>{
 
     ExecutionTimeMapper INSTANCE = Mappers.getMapper(ExecutionTimeMapper.class);
+
+    default ExecutionTimeResponse toDTO(ExecutionTime executionTime){
+        return ExecutionTimeResponse.builder()
+                .className(executionTime.getMeasuredMethod().getMeasuredClass().getClassName())
+                .methodName(executionTime.getMeasuredMethod().getMethodName())
+                .executionTime(executionTime.getExecutionTime())
+                .executionDate(executionTime.getExecutionDate())
+                .build();
+    }
 }

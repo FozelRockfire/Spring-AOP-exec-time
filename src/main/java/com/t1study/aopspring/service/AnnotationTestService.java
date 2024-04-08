@@ -5,4 +5,6 @@ public interface AnnotationTestService {
     void sleepRandomTimeUpTo3Seconds();
 
     void asyncSleepRandomTimeUpTo3Seconds();
+
+    void sleepRandomTimeUpToVarSeconds(Integer bound);
 }
