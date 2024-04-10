@@ -28,24 +28,12 @@ public class TrackAsyncTimeAspect extends AbstractTrackTimeAspect {
     @Around("trackPointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
 
-//        try {
-//            return CompletableFuture.supplyAsync(() -> {
-//                try {
-//                    return trackTime(proceedingJoinPoint, "TrackAsyncTime");
-//                } catch (Throwable e) {
-//                    log.error("AsyncTrackTime error:", e);
-//                    return null;
-//                }
-//            }).get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            throw new RuntimeException(e);
-//        }
-
         return CompletableFuture.runAsync(() -> {
             try {
                 trackTime(proceedingJoinPoint, "TrackAsyncTime");
             } catch (Throwable e) {
                 log.error("AsyncTrackTime error:", e);
+                throw new RuntimeException(e);
             }
         });
     }

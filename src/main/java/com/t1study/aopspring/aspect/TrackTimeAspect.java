@@ -28,7 +28,7 @@ public class TrackTimeAspect extends AbstractTrackTimeAspect {
             return trackTime(proceedingJoinPoint, "TrackTime");
         } catch (Throwable e) {
             log.error("TrackTime error:", e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 }

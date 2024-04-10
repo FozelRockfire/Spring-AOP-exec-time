@@ -19,7 +19,7 @@ import java.util.List;
 public interface ExecutionTimeApi {
 
     @Operation(
-            description = "Позволяет получить временные данные выполнения методов"
+            description = "Получение данных о времени выполнения методов"
     )
     @GetMapping()
     @ApiResponses(value = {
